@@ -28,10 +28,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unknown checkout offer." }, { status: 400 });
   }
 
-  if (offer === "mentorship") {
+  if (offer === "mentorship" && db) {
     const applicationId = request.nextUrl.searchParams.get("applicationId");
     if (!applicationId) {
-      return NextResponse.redirect(new URL("/?application=required#mentorship", request.url));
+      return NextResponse.redirect(new URL("/?application=required#section-5", request.url));
     }
 
     const [application] = await db
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       .limit(1);
 
     if (!application) {
-      return NextResponse.redirect(new URL("/?application=required#mentorship", request.url));
+      return NextResponse.redirect(new URL("/?application=required#section-5", request.url));
     }
   }
 
